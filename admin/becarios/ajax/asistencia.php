@@ -4,7 +4,7 @@ if (strlen(session_id()) < 1)
 	session_start();
 $asistencia = new Asistencia();
 
-$codigo_persona = isset($_POST["codigo_persona"]) ? limpiarCadena($_POST["codigo_persona"]) : "";
+//$codigo_persona = isset($_POST["codigo_persona"]) ? limpiarCadena($_POST["codigo_persona"]) : "";
 $iddepartamento = isset($_POST["iddepartamento"]) ? limpiarCadena($_POST["iddepartamento"]) : "";
 
 
@@ -176,15 +176,43 @@ switch ($_GET["op"]) {
 
 	case 'nueva_asistencia':
 		$codigo_persona = $_REQUEST["codigo_persona"];
-		$fecha = $_REQUEST["fecha"];
-		$rspta = $asistencia->existe_asistencia($codigo_persona,$fecha);
-		if($rspta>0){
-			echo "El usuario tiene una asistencia registrada el ". $fecha . ". Edite las horas o seleccione otra fecha.";
-		} else {
-			$nueva_hora = $_REQUEST["nueva_hora"];
-			$rspta = $asistencia->nueva_asistencia($codigo_persona,$fecha,$nueva_hora);
-			echo "Se ha creado exitosamente la nueva asistencia.";
+		$arrFechas = $_REQUEST["arrFechas"];
+		$nueva_hora = $_REQUEST["nueva_hora"];
+		$agregados = array();
+		$noAgregados  = array();
+		$i = 0;
+		$j = 0;
+
+		while($j < sizeof($codigo_persona)){
+			while($i < sizeof($arrFechas)){
+				$rspta = $asistencia->existe_asistencia($codigo_persona[$j],$arrFechas[$i]);
+				if ($rspta>0) {
+					$rspta2= $asistencia->obtenerNombre($codigo_persona[$j]);
+
+					$personaNoAgregada = new stdClass();
+					$personaNoAgregada->nombre = $rspta2['apellidos'];
+					$personaNoAgregada->fecha = $arrFechas[$i];
+					$personaNoAgregada->codigo = $codigo_persona[$j];
+					array_push($noAgregados,$personaNoAgregada);
+				}else {
+					$rspta = $asistencia->nueva_asistencia($codigo_persona[$j], $arrFechas[$i], $nueva_hora);
+					$rspta2= $asistencia->obtenerNombre($codigo_persona[$j]);
+					$personaAgregada = new stdClass();
+					$personaAgregada->nombre = $rspta2['apellidos'];
+					$personaAgregada->fecha = $arrFechas[$i];
+					array_push($agregados,$personaAgregada);
+				}
+				$i++;
+			}
+			$i=0;
+			$j++;
+			$arrDates = array (
+				$agregados,
+				$noAgregados
+			);
 		}
+		
+		echo json_encode($arrDates);
 	break;	
 
 	case 'borrar_asistencia':
