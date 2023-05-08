@@ -57,9 +57,19 @@ public function get_asistencia_becarios($codigo_persona){
 	return ejecutarConsultaSimpleFila($sql);
 }
 
+public function get_asistencia_total_becarios($codigo_persona){
+	$sql='select count(*) as total from asistencia_becarios WHERE codigo_persona = "'.$codigo_persona.'" ';
+	return ejecutarConsultaSimpleFila($sql);
+}
+
 public function get_asistencia($codigo_persona){
 	$sql='select count(*) as total from asistencia_tecno WHERE codigo_persona = "'.$codigo_persona.'" and fecha = CURRENT_DATE;	';
 	return ejecutarConsultaSimpleFila($sql);
+}
+
+public function primera_asitencia($codigo_persona){
+ 	$sql = "UPDATE usuarios SET fechacreado = CURRENT_TIMESTAMP WHERE codigo_persona = '$codigo_persona'";
+    return ejecutarConsulta($sql);
 }
 
 //Registrar
@@ -103,6 +113,7 @@ public function registrar_entrada($codigo_persona){
     $sql = "INSERT INTO asistencia_becarios (codigo_persona, entrada, fecha) VALUES ('$codigo_persona', CURRENT_TIMESTAMP, '$fecha')";
 	return ejecutarConsulta($sql);
 }
+
 
 public function registrar_salida($idasistencia){
 	date_default_timezone_set('America/Mexico_City');
