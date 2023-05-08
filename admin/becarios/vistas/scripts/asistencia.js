@@ -7,6 +7,7 @@ function init() {
         listarSemana();
     }
 
+
     listar_asistenciau();
     $("#formulario").on("submit", function (e) {
         guardaryeditar(e);
@@ -38,13 +39,18 @@ function init() {
         }
     });
 
+    $('#mdp-demo').multiDatesPicker({
+        dateFormat: "20y-m-d"
+    });
 }
 
 function obtenerNombreParaSelect() {
     nombreSeleccionado = $("#codigo_persona").val();
     $('#codigo_persona1').val(nombreSeleccionado);
     $("#codigo_persona1").selectpicker("refresh");
+
 }
+
 
 //funcion listar
 function listar() {
@@ -60,7 +66,7 @@ function listar() {
             columnDefs: [{
                 searchable: false,
                 orderable: false,
-                targets: 0,
+                targets: 1,
             },
             {
                 targets: [5, 6],
@@ -185,9 +191,9 @@ function listar() {
                             e.stopPropagation(); //interfiera con la tabla.
                         });
                         var currSearch = column.search();
-                            if ( currSearch ) {
-                            select.val( currSearch.substring(1, currSearch.length-1) );
-                    }
+                        if (currSearch) {
+                            select.val(currSearch.substring(1, currSearch.length - 1));
+                        }
                     });
             },
         })
@@ -272,63 +278,63 @@ function listarSemana() {
             {
                 extend: 'pdfHtml5',
                 title: "Reporte Becarios",
-                    text: 'PDF',
-                    orientation: 'portrait', //landscape
-                    pageSize: 'letter', //A3 , A5 , A6 , legal , letter
-                    exportOptions: {
-                        columns: ':visible',
-                        search: 'applied',
-                        order: 'applied'
-                    },
-                    customize: function (doc) {
-                        doc.defaultStyle.font = "mon";
-                        let table = doc.content[1].table.body;
-                        //Width de tabla
-                        doc.content[1].table.widths = ['5%', '23%', '23%', '16%', '9%', '11%', '12%'];
-                        //Centrar columnas
-                        doc.styles.tableBodyEven.alignment = "center";
-                        doc.styles.tableBodyOdd.alignment = "center";
-                        //Pintar header
-                        var numCols = $('#tbllistado').DataTable().columns(':visible').nodes().length;
-                        var numFilas = table.length;
-                        for (i = 0; i < numCols; i++) {
-                            table[0][i].fillColor = "#9D2449";
-                            for (j = 1; j < numFilas; j++) {
-                                table[j][i].fillColor = "#D4C19C";
-                                j = j + 1;
-                            }
+                text: 'PDF',
+                orientation: 'portrait', //landscape
+                pageSize: 'letter', //A3 , A5 , A6 , legal , letter
+                exportOptions: {
+                    columns: ':visible',
+                    search: 'applied',
+                    order: 'applied'
+                },
+                customize: function (doc) {
+                    doc.defaultStyle.font = "mon";
+                    let table = doc.content[1].table.body;
+                    //Width de tabla
+                    doc.content[1].table.widths = ['5%', '23%', '23%', '16%', '9%', '11%', '12%'];
+                    //Centrar columnas
+                    doc.styles.tableBodyEven.alignment = "center";
+                    doc.styles.tableBodyOdd.alignment = "center";
+                    //Pintar header
+                    var numCols = $('#tbllistado').DataTable().columns(':visible').nodes().length;
+                    var numFilas = table.length;
+                    for (i = 0; i < numCols; i++) {
+                        table[0][i].fillColor = "#9D2449";
+                        for (j = 1; j < numFilas; j++) {
+                            table[j][i].fillColor = "#D4C19C";
+                            j = j + 1;
                         }
-                        table[0][3].text = "Tipo";
-
-                        doc.content.splice(0, 1); // quitar titulo de datatables
-                        doc.pageMargins = [20, 80, 20, 30];
-                        doc.defaultStyle.fontSize = 11;
-                        doc.styles.tableHeader.fontSize = 12;
-                        doc['header'] = (function () {
-                            return {
-                                columns: [
-                                    {
-                                        alignment: 'left',
-                                        text: 'OFICINA DE PASAPORTES YUCATÁN',
-                                        color: '#621132',
-                                        font: 'gmx',
-                                        fontSize: 14,
-                                        margin: [0, 0]
-                                    },
-                                    {
-                                        alignment: 'right',
-                                        fontSize: 11,
-                                        font: "mon",
-                                        text: 'Reporte semanal. \nInicio: ' + inicio + ' Fin: ' + fin + "\nEntradas: " + (numFilas - 1),
-                                    }
-                                ],
-
-                                margin: 20
-                            }
-                        });
                     }
+                    table[0][3].text = "Tipo";
 
+                    doc.content.splice(0, 1); // quitar titulo de datatables
+                    doc.pageMargins = [20, 80, 20, 30];
+                    doc.defaultStyle.fontSize = 11;
+                    doc.styles.tableHeader.fontSize = 12;
+                    doc['header'] = (function () {
+                        return {
+                            columns: [
+                                {
+                                    alignment: 'left',
+                                    text: 'OFICINA DE PASAPORTES YUCATÁN',
+                                    color: '#621132',
+                                    font: 'gmx',
+                                    fontSize: 14,
+                                    margin: [0, 0]
+                                },
+                                {
+                                    alignment: 'right',
+                                    fontSize: 11,
+                                    font: "mon",
+                                    text: 'Reporte semanal. \nInicio: ' + inicio + ' Fin: ' + fin + "\nEntradas: " + (numFilas - 1),
+                                }
+                            ],
+
+                            margin: 20
+                        }
+                    });
                 }
+
+            }
             ],
             ajax: {
                 url: "../ajax/asistencia.php?op=listar",
@@ -370,8 +376,8 @@ function listarSemana() {
                             e.stopPropagation(); //interfiera con la tabla.
                         });
                         var currSearch = column.search();
-                            if ( currSearch ) {
-                            select.val( currSearch.substring(1, currSearch.length-1) );
+                        if (currSearch) {
+                            select.val(currSearch.substring(1, currSearch.length - 1));
                         }
                     });
             },
@@ -455,69 +461,69 @@ function listar_asistencia() {
             {
                 extend: 'pdfHtml5',
                 title: nombre_persona,
-                    text: 'PDF',
-                    orientation: 'portrait', //landscape
-                    pageSize: 'letter', //A3 , A5 , A6 , legal , letter
-                    exportOptions: {
-                        columns: ':visible',
-                        search: 'applied',
-                        order: 'applied'
-                    },
-                    customize: function (doc) {
-                        doc.defaultStyle.font = "mon";
-                        doc.styles.tableBodyEven.alignment = "center";
-                        doc.styles.tableBodyOdd.alignment = "center";
-                        let table = doc.content[1].table.body;
-                        //doc.content[1].table.widths = Array(doc.content[1].table.body[0].length + 1).join('*').split('');
-                        doc.content[1].table.widths = ['40%', '40%', '19%','1%'];
-                        var numCols = $('#tbllistado_asistencia').DataTable().columns(':visible').nodes().length;
-                        var numRows = doc.content[1].table.body.length;
-                        for (i = 0; i < numCols; i++) {
-                            table[0][i].fillColor = "#9D2449";
-                            for (j = 1; j < numRows; j++) {
-                                table[j][i].fillColor = "#D4C19C";
-                                j = j + 1;
-                            }
+                text: 'PDF',
+                orientation: 'portrait', //landscape
+                pageSize: 'letter', //A3 , A5 , A6 , legal , letter
+                exportOptions: {
+                    columns: ':visible',
+                    search: 'applied',
+                    order: 'applied'
+                },
+                customize: function (doc) {
+                    doc.defaultStyle.font = "mon";
+                    doc.styles.tableBodyEven.alignment = "center";
+                    doc.styles.tableBodyOdd.alignment = "center";
+                    let table = doc.content[1].table.body;
+                    //doc.content[1].table.widths = Array(doc.content[1].table.body[0].length + 1).join('*').split('');
+                    doc.content[1].table.widths = ['40%', '40%', '19%', '1%'];
+                    var numCols = $('#tbllistado_asistencia').DataTable().columns(':visible').nodes().length;
+                    var numRows = doc.content[1].table.body.length;
+                    for (i = 0; i < numCols; i++) {
+                        table[0][i].fillColor = "#9D2449";
+                        for (j = 1; j < numRows; j++) {
+                            table[j][i].fillColor = "#D4C19C";
+                            j = j + 1;
                         }
-                        doc.content.splice(0, 1); // quitar titulo de datatables
-                        doc.pageMargins = [20, 70, 20, 30];
-                        doc.defaultStyle.fontSize = 11;
-                        doc.styles.tableHeader.fontSize = 12;
-                        doc['header'] = (function () {
-                            return {
-                                columns: [{
-                                    alignment: 'left',
-                                    text: 'OFICINA DE PASAPORTES YUCATÁN',
-                                    color: '#621132',
-                                    font: 'gmx',
-                                    fontSize: 14,
-                                    margin: [0, 0],
-                                },
+                    }
+                    doc.content.splice(0, 1); // quitar titulo de datatables
+                    doc.pageMargins = [20, 70, 20, 30];
+                    doc.defaultStyle.fontSize = 11;
+                    doc.styles.tableHeader.fontSize = 12;
+                    doc['header'] = (function () {
+                        return {
+                            columns: [{
+                                alignment: 'left',
+                                text: 'OFICINA DE PASAPORTES YUCATÁN',
+                                color: '#621132',
+                                font: 'gmx',
+                                fontSize: 14,
+                                margin: [0, 0],
+                            },
+                            {
+                                alignment: 'right',
+                                font: 'mon',
+                                fontSize: 11,
+                                text: 'Asistencias por Fecha. \nInicio: ' + fecha_inicio + ' Fin: ' + fecha_fin + '\n Nombre: ' + nombre_persona
+                            },
+                            ],
+                            margin: 20
+                        }
+                    });
+                    doc['footer'] = (function (page, pages) {
+                        return {
+                            columns: [
                                 {
-                                    alignment: 'right',
+                                    alignment: 'center',
                                     font: 'mon',
                                     fontSize: 11,
-                                    text: 'Asistencias por Fecha. \nInicio: ' + fecha_inicio + ' Fin: ' + fecha_fin + '\n Nombre: ' + nombre_persona
+                                    text: 'Días asistidos: ' + numero_asistencias + '\n Horas en el periodo: ' + horas_periodo
                                 },
-                                ],
-                                margin: 20
-                            }
-                        });
-                        doc['footer'] = (function (page, pages) {
-                            return {
-                                columns: [
-                                    {
-                                        alignment: 'center',
-                                        font: 'mon',
-                                        fontSize: 11,
-                                        text: 'Días asistidos: ' + numero_asistencias + '\n Horas en el periodo: ' + horas_periodo
-                                    },
-                                ],
-                                margin: [10, -10]
-                            }
-                        });
-                    }
-                },
+                            ],
+                            margin: [10, -10]
+                        }
+                    });
+                }
+            },
             ],
             ajax: {
                 url: "../ajax/asistencia.php?op=listar_asistencia",
@@ -633,26 +639,57 @@ function crear_asistencia() {
     if ($("#minutosmodal").val() < 0 || $("#minutosmodal").val() == "") {
         $("#minutosmodal").val("00");
     }
-    var fecha = $("#fecha").val();
+
     var codigo_persona = $("#codigo_persona1").val();
     var nueva_hora = Math.floor($("#horasmodal").val()) + ":" + Math.floor($("#minutosmodal").val());
-    if (fecha == "") {
+    var dates = $('#mdp-demo').multiDatesPicker('value');
+    let arrFechas = dates.split(', ');
+    numFechas = arrFechas.length;
+    limpiar(numFechas);
+
+
+
+    if (dates == "") {
         document.getElementById("alerta_fecha").innerHTML = "Debes seleccionar una fecha"
         return false;
     }
+
+
+    let dialog = bootbox.dialog({
+        message: '<p class="text-center mb-0"><i class="fa fa-circle-o-notch fa-spin"></i> Agregando Asistencias...</p>',
+        closeButton: false
+    });
+
     $.ajax({
         url: "../ajax/asistencia.php?op=nueva_asistencia",
         type: "POST",
-        data: { codigo_persona: codigo_persona, fecha: fecha, nueva_hora: nueva_hora },
+        data: { codigo_persona: codigo_persona, arrFechas: arrFechas, nueva_hora: nueva_hora },
         processData: JSON,
         success: function (datos) {
-            bootbox.alert(datos);
+            dialog.modal('hide');
+            var arrDates = JSON.parse(datos);
+
+            bootbox.alert('<p class="text-center mb-0"><i class="fa fa-check" aria-hidden="true"></i> Asitencias agregadas correctamente.</p>');
+
             listar_asistencia();
+
         },
 
     })
 
     limpiar();
+}
+
+function selectNoAgregados(arrDates) {
+    let codigos = [];
+    for (let i = 0; i < arrDates[1].length; i++) {
+
+        codigos[i] = arrDates[1][i].codigo;
+        $("#codigo_persona1 option[value='" + arrDates[1][i].codigo + "']").prop("selected", true);
+
+    }
+    $("#codigo_persona1").val(codigos);
+    $("#codigo_persona1").selectpicker("refresh");
 }
 
 function borrar_asistencia(idasistencia) {
@@ -669,16 +706,16 @@ function borrar_asistencia(idasistencia) {
             }
         },
         callback: function (result) {
-            if (result){
+            if (result) {
                 $.ajax({
                     url: "../ajax/asistencia.php?op=borrar_asistencia",
                     type: "POST",
-                    data: { idasistencia: idasistencia},
+                    data: { idasistencia: idasistencia },
                     processData: JSON,
                     success: function (datos) {
                         listar_asistencia();
                     },
-            
+
                 })
             }
         }
@@ -693,9 +730,9 @@ function limpiar() {
 function mostrarES(codigopersona, fecha_inicio1, fecha_fin1) {
     if (flag) {
         fecha_inicio1 = new Date(fecha_inicio1);
-        fecha_inicio1=fecha_inicio1.toISOString().split('T')[0]
+        fecha_inicio1 = fecha_inicio1.toISOString().split('T')[0]
         fecha_fin1 = new Date(fecha_fin1)
-        fecha_fin1=fecha_fin1.toISOString().split('T')[0]
+        fecha_fin1 = fecha_fin1.toISOString().split('T')[0]
     }
     location.href = `../vistas/rptasistencia.php?codigopersona=${codigopersona}&fechaini=${fecha_inicio1}&fechafin=${fecha_fin1}`;
 }
