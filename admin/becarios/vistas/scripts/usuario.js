@@ -53,8 +53,8 @@ function limpiar() {
     $("#iddepartamento").selectpicker('refresh');
     document.getElementById("idtipousuario").selectedIndex = 0;
     $("#idtipousuario").selectpicker('refresh');
-    $("#email").val("");
     $("#login").val("");
+    $("#email").val("");
     $("#clave").val("");
     $("#codigo_persona").val("");
     $("#imagenmuestra").attr("src", "");
@@ -123,8 +123,8 @@ function listar() {
             targets: 0,
         }, 
         {
-            orderData: [9],
-            targets: [9],
+            orderData: [10],
+            targets: [10],
             render: function ( data, type, row ) {
                 if ( type === 'sort') {
                 //     var number = data.replace(':','');
@@ -371,8 +371,8 @@ function mostrar(idusuario) {
             $("#idtipousuario").val(data.idtipousuario);
             $("#idtipousuario").selectpicker('refresh');
             $("#apellidos").val(data.apellidos);
-            $("#email").val(data.email);
             $("#login").val(data.login);
+            $("#email").val(data.email);
             $("#codigo_persona").val(data.codigo_persona);
             $("#imagenmuestra").show();
             $("#imagenmuestra").attr("src", "../../files/usuarios/" + data.imagen);

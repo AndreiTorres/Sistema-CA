@@ -35,8 +35,9 @@ if (!isset($_SESSION['nombre'])) {
                   <th>Universidad</th>
                   <th>Email</th>
                   <th>Foto</th>
-                  <th>Registro</th>
-                  <th>Acumuladas</th>
+                  <th>Inicio de Practicas</th>
+                  <th>Horas Acumuladas</th>
+                  <th>Porcentaje de Horas</th>
                 </thead>
                 <tbody>
                 </tbody>
@@ -49,8 +50,9 @@ if (!isset($_SESSION['nombre'])) {
                   <th>Universidad</th>
                   <th>Email</th>
                   <th>Foto</th>
-                  <th>Registro</th>
-                  <th>Acumuladas</th>
+                  <th>Inicio de Practicas</th>
+                  <th>Horas Acumuladas</th>
+                  <th>Porcentaje de Horas</th>
                 </tfoot>
               </table>
             </div>

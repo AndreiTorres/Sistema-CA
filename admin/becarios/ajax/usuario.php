@@ -16,9 +16,8 @@ $email=isset($_POST["email"])? limpiarCadena($_POST["email"]):"";
 $codigo_persona=isset($_POST["codigo_persona"])? limpiarCadena($_POST["codigo_persona"]):"";
 $password=isset($_POST["clave"])? limpiarCadena($_POST["clave"]):"";
 $imagen=isset($_POST["imagen"])? limpiarCadena($_POST["imagen"]):"";
-$usuariocreado=isset($_POST["nombre"])? limpiarCadena($_POST["nombre"]):"";
-$idmensaje=isset($_POST["idmensaje"])? limpiarCadena($_POST["idmensaje"]):"";
 $estado=isset($_POST["estado"])? limpiarCadena($_POST["estado"]):"";
+$porcentaje=isset($_POST["Porcentaje"])? limpiarCadena($_POST["Porcentaje"]):"";
 
 switch ($_GET["op"]) {
 	case 'guardaryeditar':
@@ -44,7 +43,7 @@ switch ($_GET["op"]) {
 		if (empty($idusuario)) {
 			$idusuario=$_SESSION["idusuario"];
 			try {
-				$rspta=$usuario->insertar($nombre,$apellidos,$login,$iddepartamento,$idtipousuario,$email,$clavehash,$imagen,$usuariocreado,$codigo_persona);
+				$rspta=$usuario->insertar($nombre,$apellidos,$login,$iddepartamento,$idtipousuario,$email,$clavehash,$imagen,$codigo_persona);
 				echo $rspta ? "Datos registrados correctamente" : "No se pudo registrar todos los datos del usuario";
 			} catch(exception $e){
 				echo "Ya existe un usuario con el dato " . substr(
@@ -54,7 +53,7 @@ switch ($_GET["op"]) {
 		}
 		else {
 			try {
-				$rspta=$usuario->editar($idusuario,$nombre,$apellidos,$login,$iddepartamento,$idtipousuario,$email,$imagen,$usuariocreado,$codigo_persona,$estado);
+				$rspta=$usuario->editar($idusuario,$nombre,$apellidos,$login,$iddepartamento,$idtipousuario,$email,$imagen,$codigo_persona,$estado);
 				echo $rspta ? "Datos actualizados correctamente" : "No se pudo actualizar los datos";
 			} catch(exception $e){
 				echo "Ya existe un usuario con el dato " . substr(
@@ -109,6 +108,19 @@ switch ($_GET["op"]) {
 
 
 		while ($reg=$rspta->fetch_object()) {
+
+			$practicante= 400;
+			$servicio= 480;
+
+			switch($reg->idtipousuario){
+				case 'Practicante': $porcentaje= round(intval($reg->horas)/$practicante *100);
+				break;
+
+				case 'Servicio social': $porcentaje=round(intval($reg->horas)/$servicio *100);
+				
+				break;
+			}
+				
 			$data[]=array(
 				"0"=>"",
 				"1"=>'<button class="btn btn-warning btn-xs" onclick="mostrar('.$reg->idusuario.')"><i class="fa fa-pencil"></i></button>'.' '.'<button class="btn btn-info btn-xs" onclick="mostrar_clave('.$reg->idusuario.')"><i class="fa fa-key"></i></button>'.' '.'<button class="btn btn-danger btn-xs" onclick="desactivar('."'".$reg->codigo_persona."'".')"><i class="fa fa-close"></i></button>',
@@ -118,8 +130,11 @@ switch ($_GET["op"]) {
 				"5"=>$reg->iddepartamento,
 				"6"=>$reg->email,
 				"7"=>"<img src='../../files/usuarios/".$reg->imagen."' height='50px' width='50px'>",
-				"8"=>$reg->fechacreado,
+				"8"=>$reg->fechacreado, 
 				"9"=>$reg->horas,
+				"10"=>$porcentaje 
+				."%"
+
 				);
 		}
 
