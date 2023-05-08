@@ -33,15 +33,16 @@ if (!isset($_SESSION['nombre'])) {
                       <h3 class="modal-title" id="exampleModalLabel">Agregar Asistencia</h3>
                     </div>
                     <div class="modal-body">
-
+                    <input type="button" class="btn btn-primary" id="selectAll" name="selectAll" value="Seleccionar Todos">
+                      <input type="button" class="btn btn-primary" id="unselectAll" name="unselectAll" value="Quitar Todos"><br /><br />
                       <div class='form-group'>
                         <label>Becario</label>
-                        <select name='codigo_persona1' id='codigo_persona1' class='form-control selectpicker' data-live-search='true' required>
+                        <select multiple name='codigo_persona1' id='codigo_persona1' class='form-control selectpicker' data-live-search='true' required>
                         </select>
                       </div>
                       <div class='form-group'>
                         <label>Fecha <p id='alerta_fecha' class='text-danger'></p></label>
-                        <input type='date' class='form-control' name='fecha' id='fecha' value='<?php echo date('Y-m-d') ?>' required>
+                        <input id='mdp-demo' class='form-control'>
                       </div>
                       <div class='form-group'><label>Horas</label>
                         <div>
@@ -112,6 +113,18 @@ if (!isset($_SESSION['nombre'])) {
   require '../../general/vistas/footer.php';
   ?>
   <script src="scripts/asistencia.js"></script>
+  <script>
+      $('#selectAll').click(function() {
+        $('#codigo_persona1 option').prop('selected', true);
+        $("#codigo_persona1").selectpicker("refresh");
+      });
+
+      $('#unselectAll').click(function() {
+        $('#codigo_persona1 option').prop('selected', false);
+        $("#codigo_persona1").selectpicker("refresh");
+      });
+
+      </script>
 <?php
 }
 

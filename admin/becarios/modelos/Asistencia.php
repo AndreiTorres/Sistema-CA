@@ -52,6 +52,11 @@ public function nueva_hora($idasistencia,$nueva_hora){
 	return ejecutarConsulta($sql);
 }
 
+public function obtenerNombre($codigo_persona){
+	$sql = "SELECT a.apellidos FROM usuarios a WHERE '$codigo_persona' = codigo_persona";
+	return ejecutarConsultaSimpleFila($sql);
+}
+
 public function nueva_asistencia($codigo_persona,$fecha,$nueva_hora) {
 	//Se guardan las horas pero no se muestran
 	$sql = "INSERT INTO `asistencia_becarios` ( `codigo_persona`, `entrada`, `salida`, `horas`, `fecha`) VALUES ( '$codigo_persona', '$fecha 00:00:00', '$fecha 00:00:01', '$nueva_hora', '$fecha')";
