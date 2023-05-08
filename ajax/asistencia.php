@@ -186,6 +186,12 @@ switch ($_GET["op"]) {
 				}
 				break;
 			default:
+			
+			if (($asistencia->get_asistencia_total_becarios($codigo_persona))['total'] == 0) {
+						$asistencia->primera_asitencia($codigo_persona);
+					  echo 'entrada';
+	
+				  }
 				if (($asistencia->get_asistencia_becarios($codigo_persona))['total'] == 0) {
 					$asistencia->registrar_entrada($codigo_persona);
 				} else {
