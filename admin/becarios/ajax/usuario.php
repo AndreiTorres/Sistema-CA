@@ -132,8 +132,7 @@ switch ($_GET["op"]) {
 				"7"=>"<img src='../../files/usuarios/".$reg->imagen."' height='50px' width='50px'>",
 				"8"=>$reg->fechacreado, 
 				"9"=>$reg->horas,
-				"10"=>$porcentaje 
-				."%"
+				"10"=>$porcentaje ."%"
 
 				);
 		}
