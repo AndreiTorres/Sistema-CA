@@ -123,8 +123,8 @@ function listar() {
             targets: 0,
         }, 
         {
-            orderData: [10],
-            targets: [10],
+            orderData: [9],
+            targets: [9],
             render: function ( data, type, row ) {
                 if ( type === 'sort') {
                 //     var number = data.replace(':','');
@@ -137,7 +137,7 @@ function listar() {
                 
                 sortValue = (parseInt(horas)*3600+parseInt(minutos)*60+parseInt(segundos)).toString();
 
-                for(i=sortValue.length;i<8;i++) {
+                for(i=sortValue.length;i < 8;i++) {
                     sortValue = "0"+sortValue;
                 }
                   return sortValue;
