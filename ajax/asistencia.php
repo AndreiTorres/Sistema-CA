@@ -69,7 +69,7 @@ switch ($_GET["op"]) {
 		$mensaje = new Mensaje();
 		$result = $asistencia->verificar_usuario($codigo_persona);
 		if ($result > 0) {
-			date_default_timezone_set('America/Mexico_City');
+			date_default_timezone_set('America/Belize');
 			$hora = date("H:i:s");
 			$fecha = date("Y-m-d");
 			switch ($result['tipo_usuario']) {
@@ -109,7 +109,7 @@ switch ($_GET["op"]) {
 	case 'registrar_asistencia':
 		// !!!!!!!!determinar tipo de usuario y hace switch
 		$result = $asistencia->tipo_usuario($codigo_persona);
-		date_default_timezone_set('America/Mexico_City');
+		date_default_timezone_set('America/Belize');
 		$fecha = date("Y-m-d");
 		$hora = date("H:i:s");
 		switch ($result['tipo_usuario']) {
@@ -144,7 +144,7 @@ switch ($_GET["op"]) {
 				} else {
 					$ultimo = $asistencia->ultima_asistencia_cancilleria($codigo_persona);
 					if ($ultimo['salida'] != "") {
-						$asistencia->registrar_entrada_cancilleria($codigo_persona, "Asistencia");
+						$asistencia->registrar_entrada_cancilleria($codigo_persona, "Reingreso");
 					} else {
 						$asistencia->registrar_salida_cancilleria($ultimo['idasistencia']);
 					}
