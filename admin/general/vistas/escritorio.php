@@ -28,18 +28,24 @@ if (!isset($_SESSION['nombre'])) {
           break;
         default:
         ?>
-          <div class="row">
+         <div class="row">
             <div class="col-md-12">
               <div class="box">
-                <div class="panel-body">
+              <div class="panel-body">
                   <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                     <div class="small-box bg-green">
+                    <a href="../../qrlib/index.php" type="button" class="small-box-footer">
                       <div class="small-box-footer">
                         <div class="inner">
                           <h5 style="font-size: 20px;">
-                            <strong>Bienvenido </strong>
+                            <strong>Obtener mi  codigo QR </strong>
                           </h5>
                           <h1><strong>📗</strong></h1>
+                          <h7><strong>
+
+                            </strong></h7>
+
+
                         </div>
                         <div class="icon">
                           <i class="fa fa-list" aria-hidden="true"></i>
