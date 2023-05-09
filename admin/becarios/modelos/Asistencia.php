@@ -33,7 +33,7 @@ public function listar_dias_asistidos($fecha_inicio,$fecha_fin,$codigo_persona){
 public function horas_periodo($fecha_inicio,$fecha_fin,$codigo_persona){
 	$sql="SELECT SEC_TO_TIME(SUM(TIME_TO_SEC(horas))) AS Total FROM asistencia_becarios a  WHERE DATE(a.fecha)>='$fecha_inicio' AND DATE(a.fecha)<='$fecha_fin' AND a.codigo_persona = '$codigo_persona'";
 	//SELECT SEC_TO_TIME(SUM(TIME_TO_SEC(horas))) AS Total FROM asistencia WHERE tipo = 'Salida' AND DATE(fecha)>= '2022-06-28' AND DATE(fecha)<='2022-06-30' GROUP by codigo_persona
-	return ejecutarConsultaSimpleFila($sql);
+	return ejecutarConsultaSimpleFila($sql); 
 }
 
 public function horasbtwdate($fecha_inicio,$fecha_fin,$codigoper){
